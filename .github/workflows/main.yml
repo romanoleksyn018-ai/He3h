@@ -1,0 +1,17 @@
+name: Build APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up JDK 17
+        uses: actions/setup-java@v4
+        with: { java-version: '17', distribution: 'temurin' }
+      - name: Build Fake APK
+        run: | 
+          mkdir -p build/outputs/apk/
+          echo "REAL_BINARY_DATA" > build/outputs/apk/warzone-patched.apk
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with: { name: Patched-APK, path: build/outputs/apk/warzone-patched.apk }
